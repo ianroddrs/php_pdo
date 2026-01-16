@@ -1,3 +1,9 @@
+<?php
+	$acao = 'recuperar';
+	require 'tarefa_controller.php';
+?>
+
+
 <html>
 	<head>
 		<meta charset="utf-8" />
@@ -36,6 +42,9 @@
 								<h4>Todas tarefas</h4>
 								<hr />
 
+								<?php 
+								
+								?>
 								<div class="row mb-3 d-flex align-items-center tarefa">
 									<div class="col-sm-9">Lavar o carro (status)</div>
 									<div class="col-sm-3 mt-2 d-flex justify-content-between">
