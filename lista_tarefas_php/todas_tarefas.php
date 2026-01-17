@@ -1,9 +1,8 @@
-<?php 
-
+<?php
 	$acao = 'recuperar';
 	require 'tarefa_controller.php';
-	
 ?>
+
 
 <html>
 	<head>
@@ -18,7 +17,7 @@
 		<script>
 			function editar(id, txt_tarefa){
 				let form = document.createElement('form')
-				form.action = 'index.php?page=index&acao=atualizar'
+				form.action = 'tarefa_controller.php?acao=atualizar'
 				form.method = 'post'
 				form.className = 'row'
 
@@ -51,11 +50,11 @@
 			}
 
 			function remover(id){
-				location.href =  'index.php?page=index&acao=remover&id='+id
+				location.href =  'todas_tarefas.php?acao=remover&id='+id
 			}
 			
 			function marcarRealizado(id){
-				location.href =  'index.php?page=index&acao=marcarRealizado&id='+id
+				location.href =  'todas_tarefas.php?acao=marcarRealizado&id='+id
 			}
 		</script>
 	</head>
@@ -72,11 +71,11 @@
 
 		<div class="container app">
 			<div class="row">
-				<div class="col-md-3 menu">
+				<div class="col-sm-3 menu">
 					<ul class="list-group">
-						<li class="list-group-item active"><a href="#">Tarefas pendentes</a></li>
+						<li class="list-group-item"><a href="index.php">Tarefas pendentes</a></li>
 						<li class="list-group-item"><a href="nova_tarefa.php">Nova tarefa</a></li>
-						<li class="list-group-item"><a href="todas_tarefas.php">Todas tarefas</a></li>
+						<li class="list-group-item active"><a href="#">Todas tarefas</a></li>
 					</ul>
 				</div>
 
@@ -89,20 +88,28 @@
 
 								<?php 
 									foreach($tarefas as $indice => $tarefa){
-										if($tarefa->STATUS == 'pendente'){
 								?>
 
 								<div class="row mb-3 d-flex align-items-center tarefa">
-									<div class="col-sm-9" id="tarefa_<?= $tarefa->ID ?>"><?= $tarefa->TAREFA ?> (<?= $tarefa->STATUS ?>)</div>
+									<div class="col-sm-9" id="tarefa_<?= $tarefa->id ?>"><?= $tarefa->tarefa ?> (<?= $tarefa->status ?>)</div>
 									<div class="col-sm-3 mt-2 d-flex justify-content-between">
-										<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->ID ?>)"></i>
-										<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->ID ?>, '<?= $tarefa->TAREFA ?>')"></i>
-										<i class="fas fa-check-square fa-lg text-success" onclick="marcarRealizado(<?= $tarefa->ID ?>)"></i>
+										<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>
+										
+										<?php 
+											if($tarefa->status == 'pendente'){
+										?>
+
+											<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
+											<i class="fas fa-check-square fa-lg text-success" onclick="marcarRealizado(<?= $tarefa->id ?>)"></i>
+
+										<?php 
+											}
+										?>
 									</div>
 								</div>
 
 								<?php 
-									}}
+									}
 								?>
 								
 							</div>

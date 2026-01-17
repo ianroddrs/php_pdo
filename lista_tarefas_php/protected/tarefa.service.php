@@ -12,18 +12,18 @@
         }
         
         public function inserir(){
-            $query = 'INSERT INTO TB_TAREFAS(TAREFA) VALUES (:TAREFA)';
+            $query = 'INSERT INTO tb_tarefas(tarefa) VALUES (?)';
             $stmt = $this->conexao->prepare($query);
-            $stmt->bindValue(':TAREFA', $this->tarefa->__get('tarefa'));
+            $stmt->bindValue(1, $this->tarefa->__get('tarefa'));
             $stmt->execute();
         }
             
         public function recuperar(){
             $query = '
                 SELECT 
-                    T.ID, S.STATUS, TAREFA 
-                FROM TB_TAREFAS AS T
-                LEFT JOIN TB_STATUS AS S ON (T.ID_STATUS = S.ID)
+                    t.id, s.status, tarefa 
+                FROM tb_tarefas AS t
+                LEFT JOIN tb_status AS s ON (t.id_status = s.id)
                 ';
             $stmt = $this->conexao->prepare($query);
             $stmt->execute();
@@ -32,8 +32,8 @@
                 
         public function atualizar(){
             $query = '
-                UPDATE TB_TAREFAS
-                SET TAREFA = ? WHERE ID = ?
+                UPDATE tb_tarefas
+                SET tarefa = ? WHERE id = ?
             ';
             $stmt = $this->conexao->prepare($query);
             $stmt->bindValue(1, $this->tarefa->__get('tarefa'));
@@ -43,8 +43,8 @@
         
         public function remover(){
             $query = '
-            DELETE FROM TB_TAREFAS
-            WHERE ID = ?
+            DELETE FROM tb_tarefas
+            WHERE id = ?
             ';
             $stmt = $this->conexao->prepare($query);
             $stmt->bindValue(1, $this->tarefa->__get('id'));
@@ -53,8 +53,8 @@
 
         public function marcarRealizado(){
             $query = '
-                UPDATE TB_TAREFAS
-                SET ID_STATUS = ? WHERE ID = ?
+                UPDATE tb_tarefas
+                SET id_status = ? WHERE id = ?
             ';
             $stmt = $this->conexao->prepare($query);
             $stmt->bindValue(1, $this->tarefa->__get('id_status'));
