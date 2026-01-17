@@ -19,22 +19,50 @@
         }
             
         public function recuperar(){
-            $query = 'SELECT ID, ID_STATUS, TAREFA FROM TB_TAREFAS';
+            $query = '
+                SELECT 
+                    T.ID, S.STATUS, TAREFA 
+                FROM TB_TAREFAS AS T
+                LEFT JOIN TB_STATUS AS S ON (T.ID_STATUS = S.ID)
+                ';
             $stmt = $this->conexao->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
         }
                 
         public function atualizar(){
-            
+            $query = '
+                UPDATE TB_TAREFAS
+                SET TAREFA = ? WHERE ID = ?
+            ';
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bindValue(1, $this->tarefa->__get('tarefa'));
+            $stmt->bindValue(2, $this->tarefa->__get('id'));
+            return $stmt->execute();
         }
-
+        
         public function remover(){
-
+            $query = '
+            DELETE FROM TB_TAREFAS
+            WHERE ID = ?
+            ';
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bindValue(1, $this->tarefa->__get('id'));
+            $stmt->execute();
         }
+
+        public function marcarRealizado(){
+            $query = '
+                UPDATE TB_TAREFAS
+                SET ID_STATUS = ? WHERE ID = ?
+            ';
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bindValue(1, $this->tarefa->__get('id_status'));
+            $stmt->bindValue(2, $this->tarefa->__get('id'));
+            return $stmt->execute();
+        }
+
     }
-
-
 ?>
 
 
